@@ -1,5 +1,3 @@
-
-```javascript
 import * as THREE from 'three';
 import { BONE_HIERARCHY, BONE_NAMES } from './bone-definitions.js';
 
