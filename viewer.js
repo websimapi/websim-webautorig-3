@@ -220,21 +220,6 @@ export class Viewer {
         this.activeMarkerId = markerId;
     }
     
-    getModelTransform() {
-        if (!this.model) {
-            return {
-                position: new THREE.Vector3(),
-                quaternion: new THREE.Quaternion(),
-                scale: new THREE.Vector3(1, 1, 1)
-            };
-        }
-        return {
-            position: this.model.position.clone(),
-            quaternion: this.model.quaternion.clone(),
-            scale: this.model.scale.clone()
-        };
-    }
-    
     getSceneData() {
         return {
             model: this.model

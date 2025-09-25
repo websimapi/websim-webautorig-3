@@ -10,7 +10,7 @@ import { createTestAnimations } from './animation-builder.js';
  * and binds it to the mesh.
  */
 
-export async function rigCharacter(model, markers, modelInverseMatrix, modelTransform, onProgress) {
+export async function rigCharacter(model, markers, modelInverseMatrix, onProgress) {
     onProgress(0.1, "Creating skeleton...");
     await new Promise(res => setTimeout(res, 200));
 
@@ -50,9 +50,6 @@ export async function rigCharacter(model, markers, modelInverseMatrix, modelTran
     // 4. Create SkinnedMesh
     const skinnedMesh = createSkinnedMesh(targetMesh, skeleton, skinIndex, skinWeight);
     
-    // Position the SkinnedMesh at the hips' location in local space.
-    skinnedMesh.position.copy(markerPositions.get('hips'));
-
     // Add the root bone to the skinned mesh
     skinnedMesh.add(boneMap.get('hips')); 
 
@@ -62,13 +59,6 @@ export async function rigCharacter(model, markers, modelInverseMatrix, modelTran
     // Create a new model group to hold the final result
     const riggedModel = new THREE.Group();
     riggedModel.add(skinnedMesh);
-
-    // Apply the original model's transform to the new rigged group
-    if (modelTransform) {
-        riggedModel.position.copy(modelTransform.position);
-        riggedModel.quaternion.copy(modelTransform.quaternion);
-        riggedModel.scale.copy(modelTransform.scale);
-    }
     
     // Add test animations
     const animations = createTestAnimations(skeleton, boneMap.get('hips').position, markerPositions);

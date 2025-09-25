@@ -36,9 +36,7 @@ export function createSkeleton(markers, modelInverseMatrix) {
             bone.position.copy(childLocalPos).sub(parentLocalPos);
 
         } else { // This is the root bone (hips)
-            // The root bone's position will be handled by the SkinnedMesh's transform.
-            // Set its local position to zero.
-            bone.position.set(0, 0, 0);
+            bone.position.copy(markerPositions.get(id));
         }
     }
 
@@ -49,6 +47,16 @@ export function createSkeleton(markers, modelInverseMatrix) {
 export function createSkinnedMesh(targetMesh, skeleton, skinIndex, skinWeight) {
     const geometry = targetMesh.geometry;
     const material = targetMesh.material;
+    
+    // Decompose the original mesh's world matrix to handle its scale correctly.
+    const position = new THREE.Vector3();
+    const quaternion = new THREE.Quaternion();
+    const scale = new THREE.Vector3();
+    targetMesh.matrixWorld.decompose(position, quaternion, scale);
+    
+    // Apply the inverse of the original scale to the geometry, so the SkinnedMesh can be scaled by its bones.
+    // This prevents "double-scaling" issues.
+    geometry.scale(1 / scale.x, 1 / scale.y, 1 / scale.z);
 
     // Set up geometry attributes
     geometry.setAttribute('skinIndex', skinIndex);
@@ -61,6 +69,9 @@ export function createSkinnedMesh(targetMesh, skeleton, skinIndex, skinWeight) {
 
     const skinnedMesh = new THREE.SkinnedMesh(geometry, material);
     skinnedMesh.bind(skeleton);
+    
+    // Re-apply the original scale to the SkinnedMesh object itself.
+    skinnedMesh.scale.copy(scale);
 
     return skinnedMesh;
 }
