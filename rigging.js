@@ -50,6 +50,9 @@ export async function rigCharacter(model, markers, modelInverseMatrix, modelTran
     // 4. Create SkinnedMesh
     const skinnedMesh = createSkinnedMesh(targetMesh, skeleton, skinIndex, skinWeight);
     
+    // Position the SkinnedMesh at the hips' location in local space.
+    skinnedMesh.position.copy(markerPositions.get('hips'));
+
     // Add the root bone to the skinned mesh
     skinnedMesh.add(boneMap.get('hips')); 
 

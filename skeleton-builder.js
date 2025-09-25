@@ -36,7 +36,9 @@ export function createSkeleton(markers, modelInverseMatrix) {
             bone.position.copy(childLocalPos).sub(parentLocalPos);
 
         } else { // This is the root bone (hips)
-            bone.position.copy(markerPositions.get(id));
+            // The root bone's position will be handled by the SkinnedMesh's transform.
+            // Set its local position to zero.
+            bone.position.set(0, 0, 0);
         }
     }
 
