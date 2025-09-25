@@ -1,5 +1,3 @@
-
-```javascript
 import * as THREE from 'three';
 
 export function createWalkAnimation(hips, spine, shoulderL, shoulderR, elbowL, elbowR, kneeL, kneeR, hipL, hipR, hipPos, markerPositions) {

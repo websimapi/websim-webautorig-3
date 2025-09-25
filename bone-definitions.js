@@ -1,5 +1,3 @@
-
-```javascript
 /** 
  * Bone hierarchy and naming definitions for the auto-rigging system
  */

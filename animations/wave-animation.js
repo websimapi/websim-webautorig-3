@@ -1,5 +1,3 @@
-
-```javascript
 import * as THREE from 'three';
 
 export function createWaveAnimation(shoulderR, elbowR) {
