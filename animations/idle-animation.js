@@ -1,5 +1,3 @@
-
-```javascript
 import * as THREE from 'three';
 
 export function createIdleAnimation(hips, spine, shoulderL, shoulderR, elbowL, elbowR, kneeL, kneeR, hipPos, markerPositions) {
