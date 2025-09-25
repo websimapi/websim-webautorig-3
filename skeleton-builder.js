@@ -1,3 +1,5 @@
+
+```javascript
 import * as THREE from 'three';
 import { BONE_HIERARCHY, BONE_NAMES } from './bone-definitions.js';
 
@@ -47,16 +49,6 @@ export function createSkeleton(markers, modelInverseMatrix) {
 export function createSkinnedMesh(targetMesh, skeleton, skinIndex, skinWeight) {
     const geometry = targetMesh.geometry;
     const material = targetMesh.material;
-    
-    // Decompose the original mesh's world matrix to handle its scale correctly.
-    const position = new THREE.Vector3();
-    const quaternion = new THREE.Quaternion();
-    const scale = new THREE.Vector3();
-    targetMesh.matrixWorld.decompose(position, quaternion, scale);
-    
-    // Apply the inverse of the original scale to the geometry, so the SkinnedMesh can be scaled by its bones.
-    // This prevents "double-scaling" issues.
-    geometry.scale(1 / scale.x, 1 / scale.y, 1 / scale.z);
 
     // Set up geometry attributes
     geometry.setAttribute('skinIndex', skinIndex);
@@ -68,10 +60,17 @@ export function createSkinnedMesh(targetMesh, skeleton, skinIndex, skinWeight) {
     }
 
     const skinnedMesh = new THREE.SkinnedMesh(geometry, material);
-    skinnedMesh.bind(skeleton);
-    
-    // Re-apply the original scale to the SkinnedMesh object itself.
+
+    // Decompose the original mesh's world matrix to handle its scale correctly.
+    const position = new THREE.Vector3();
+    const quaternion = new THREE.Quaternion();
+    const scale = new THREE.Vector3();
+    targetMesh.matrixWorld.decompose(position, quaternion, scale);
+
+    // Apply the original mesh's scale to the SkinnedMesh object.
     skinnedMesh.scale.copy(scale);
+
+    skinnedMesh.bind(skeleton);
 
     return skinnedMesh;
 }

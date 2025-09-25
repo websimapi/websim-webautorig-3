@@ -43,4 +43,3 @@ export function createTestAnimations(skeleton, hipPos, markerPositions) {
 // removed function createWaveAnimation() {}
 // removed function createIdleAnimation() {}
 // removed function createWalkAnimation() {}
-

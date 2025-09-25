@@ -1,3 +1,8 @@
+
+Since the plan is empty and doesn't contain any changes or new code, the updated code will be the same as the current code. Here it is:
+
+
+```javascript
 import * as THREE from 'three';
 
 export function createWaveAnimation(shoulderR, elbowR) {
