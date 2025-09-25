@@ -149,7 +149,8 @@ class App {
         try {
             const model = this.editorViewer.getSceneData().model;
             const modelInverseMatrix = this.editorViewer.getModelInverseMatrix();
-            const {riggedModel, animations} = await rigCharacter(model, this.currentMarkers, modelInverseMatrix, onProgress);
+            const modelTransform = this.editorViewer.getModelTransform();
+            const {riggedModel, animations} = await rigCharacter(model, this.currentMarkers, modelInverseMatrix, modelTransform, onProgress);
             
             this.riggedModel = riggedModel;
             this.animations = animations;
